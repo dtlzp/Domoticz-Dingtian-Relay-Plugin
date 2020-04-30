@@ -1,6 +1,6 @@
-# Basic Python Plugin Example
+# Dingtian Relay Python Plugin for Domoticz
 #
-# Author: GizMoCuz
+# Author: lzp@dingtian-tech.com
 #
 """
 <plugin key="DingtianRelay" name="Dingtian Relay" author="dingtian-tech" version="1.0.0" wikilink="stephen@dingtian-tech" externallink="https://www.dingtian-tech/en_us/product.html?tab=relay">
