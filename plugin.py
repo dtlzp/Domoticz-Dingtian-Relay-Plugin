@@ -3,7 +3,7 @@
 # Author: lzp@dingtian-tech.com
 #
 """
-<plugin key="DingtianRelay" name="Dingtian Relay" author="dingtian-tech" version="1.0.0" wikilink="stephen@dingtian-tech" externallink="https://www.dingtian-tech/en_us/product.html?tab=relay">
+<plugin key="DingtianRelay" name="Dingtian Relay" author="dingtian-tech" version="1.0.0" wikilink="https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin" externallink="https://www.dingtian-tech/en_us/product.html?tab=relay">
     <description>
         Dingtian-tech Relay Domoticz Plugin.
     </description>
@@ -88,9 +88,11 @@ class BasePlugin:
         self.device_alive = True
         self.last_times = 0
         self.lastHeartbeat = datetime.datetime.now()
+        str_log = "onMessage relay: "
         for i in range(1, self.channel_count):
             self.relay[i] = int(strData[i-1])
-        Domoticz.Log("onMessage relay: "+str(self.relay[1])+str(self.relay[2])+str(self.relay[3])+str(self.relay[4])+str(self.relay[5])+str(self.relay[6])+str(self.relay[7])+str(self.relay[8]))
+            str_log += str(self.relay[i])
+        Domoticz.Log(str_log)
 
         self.SyncDevices()
         Domoticz.Log("onMessage end")
