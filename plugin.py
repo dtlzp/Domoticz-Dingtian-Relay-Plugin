@@ -3,7 +3,7 @@
 # Author: lzp@dingtian-tech.com
 #
 """
-<plugin key="DingtianRelay" name="Dingtian Relay" author="dingtian-tech" version="1.0.0" wikilink="https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin" externallink="https://www.dingtian-tech/en_us/product.html?tab=relay">
+<plugin key="DingtianRelay" name="Dingtian Relay" author="dingtian-tech" version="1.1.0" wikilink="https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin" externallink="https://www.dingtian-tech/en_us/product.html?tab=relay">
     <description>
         Dingtian-tech Relay Domoticz Plugin.
     </description>
