@@ -38,4 +38,4 @@ git pull
 
 ## About firmware version and plugins version
 - [plugins V1.2.0](https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin/tree/v1.2.0) for relay board firmware version >= 2.17.XX
-- [plugins V1.1.0](https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin/tree/v1.1.0) for relay board firmware version <= v2.16.XX
+- [plugins V1.1.0](https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin/tree/v1.1.x) for relay board firmware version <= v2.16.XX
