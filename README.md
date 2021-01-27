@@ -1,5 +1,5 @@
 # Domoticz Dingtian Relay Plugin
-Domoticz Python plugin for [Dingtian Relay](www.dingtian-tech.com/us_en/product.html?type=relay)
+Domoticz Python plugin for [Dingtian Relay](https://www.dingtian-tech.com/us_en/product.html?type=relay)
 ,support Ethernet and WiFi interface
 ## Function
 - Relay ON/OFF
@@ -39,3 +39,8 @@ git pull
 - Dingtian Relay 2 Channel DT-RELAY2
 - Dingtian Relay 4 Channel DT-RELAY4
 - Dingtian Relay 8 Channel DT-RELAY8
+
+## About firmware version and plugins version
+- [plugins V1.2.0](https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin/tree/v1.2.0) for relay board firmware version >= 2.17.XX
+- [plugins V1.1.0](https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin/tree/v1.1.0) for relay board firmware version <= v2.16.XX
+
