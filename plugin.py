@@ -3,14 +3,9 @@
 # Author: lzp@dingtian-tech.com
 #
 """
-<plugin key="DingtianRelay" name="Dingtian Relay" author="dingtian-tech" version="1.2.0" wikilink="https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin" externallink="https://www.dingtian-tech/en_us/product.html?tab=relay">
+<plugin key="DingtianRelay" name="Dingtian Relay" author="dingtian-tech" version="1.1.1" wikilink="https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin" externallink="https://www.dingtian-tech/en_us/product.html?tab=relay">
     <description>
-        Dingtian-tech Relay Domoticz Plugin.<br />
-        Parity Mutux:<br />
-        {R1:ON,R2:OFF}/{R1:OFF,R2:ON}<br />
-        {R3:ON,R4:OFF}/{R3:OFF,R4:ON}<br />
-        {R5:ON,R6:OFF}/{R5:OFF,R6:ON}<br />
-        {R7:ON,R8:OFF}/{R7:OFF,R8:ON}<br />
+        Dingtian-tech Relay Domoticz Plugin.
     </description>
     <params>
         <param field="Address" label="IP Address" required="true" width="200px"/>
@@ -23,13 +18,7 @@
             </options>
         </param>
         <param field="Password" label="Password" width="100px" required="true" default="0"/>
-        <param field="Mode2" label="Parity Mutex" width="75px">
-            <options>
-                <option label="True" value="Yes"/>
-                <option label="False" value="No" default="true" />
-            </options>
-        </param>
-        <param field="Mode3" label="Debug" width="75px">
+        <param field="Mode2" label="Debug" width="75px">
             <options>
                 <option label="True" value="Debug"/>
                 <option label="False" value="Normal" default="true" />
@@ -45,48 +34,31 @@ import struct
 class BasePlugin:
     channel_count = 0
     relay = {}
-    rinput = {}
 
     BeaconConn = None
     BeaconConnS = None
     last_times = 0
     lastHeartbeat = datetime.datetime.now()
     device_alive = False
-    dtr_debug = 0
-    parity_mutex = False
-    password = 0
+    dtr_debug = 0;
 
     def __init__(self):
-        self.var = 1.2
+        self.var = 1.0
         return
 
     def onStart(self):
-        if Parameters["Mode3"] == "Debug":
+        if Parameters["Mode2"] == "Debug":
             self.dtr_debug = 1
-
-        if Parameters["Mode2"] == "Yes":
-            self.parity_mutex = True
 
         Domoticz.Log("onStart called")
 
-        self.password = int(Parameters["Password"])
-
         self.channel_count = int(Parameters["Mode1"])+1
-        offset = 1
         if ( 0 == len(Devices) ):
             for i in range(1, self.channel_count):
-                Domoticz.Device(Name="RELAY"+chr(0x30+i), Unit=offset, TypeName="Switch",  Image=0).Create()
-                offset = offset + 1
-            for i in range(1, self.channel_count):
-                Domoticz.Device(Name="INPUT"+chr(0x30+i), Unit=offset, TypeName="Switch",  Image=0).Create()
-                offset = offset + 1
+                Domoticz.Device(Name="RELAY"+chr(0x30+i), Unit=i, TypeName="Switch",  Image=0).Create()
         else:
             for i in range(1, self.channel_count):
-                self.relay[i] = Devices[offset].nValue
-                offset = offset + 1
-            for i in range(1, self.channel_count):
-                self.rinput[i] = Devices[offset].nValue
-                offset = offset + 1
+                self.relay[i] = Devices[i].nValue
 
         port = int(Parameters["Port"])
         if 1 == self.dtr_debug:
@@ -112,7 +84,8 @@ class BasePlugin:
             return
         if( 0 == Status ):
             self.BeaconConn.Send(Message="00")
-            b_cmd = struct.pack("<4BH", 0xFF, 0xAA, 0, 1, self.password)
+            password = int(Parameters["Password"])
+            b_cmd = struct.pack("<4BH", 0xFF, 0xAA, 0, 1, password)
             self.BeaconConnS.Send(Message=b_cmd)
 
     def onMessage(self, Connection, Data):
@@ -122,16 +95,8 @@ class BasePlugin:
         self.device_alive = True
         self.last_times = 0
         self.lastHeartbeat = datetime.datetime.now()
-        strlist = strData.split(':')
-        str_val = strlist[0]
         for i in range(1, self.channel_count):
-            self.relay[i] = int(str_val[i-1])
-        str_val = strlist[1]
-        for i in range(1, self.channel_count):
-            self.rinput[i] = int(not int(str_val[i-1]))
-        str_val = strlist[2]
-        if 1 == self.dtr_debug:
-            Domoticz.Log("onMessage channel_cnt:" + str_val)
+            self.relay[i] = int(strData[i-1])
         self.SyncDevices()
         if 1 == self.dtr_debug:
             Domoticz.Log("onMessage end")
@@ -154,20 +119,16 @@ class BasePlugin:
         if (action == "On"):
             bit = 1
 
+        if 1 == self.dtr_debug:
+            Domoticz.Log("Password:" + Parameters["Password"])
+
+        password = int(Parameters["Password"])
         mask = 1   << relay_index
         setv = bit << relay_index
-        if True == self.parity_mutex:
-            if relay_index&1:
-                relay_index=relay_index-1
-            else:
-                relay_index=relay_index+1
-            bit = 0
-            mask = mask | (1   << relay_index)
-            setv = setv | (bit << relay_index)
         if 1 == self.dtr_debug:
-            Domoticz.Log("password=" + hex(self.password) + ",mask=" + hex(mask) + ",setv=" + hex(setv))
+            Domoticz.Log("password=" + hex(password) + ",mask=" + hex(mask) + ",setv=" + hex(setv))
 
-        b_cmd = struct.pack("<4BH2B", 0xFF, 0xAA, 0, 1, self.password, mask, setv)
+        b_cmd = struct.pack("<4BH2B", 0xFF, 0xAA, 0, 1, password, mask, setv)
         self.BeaconConnS.Send(Message=b_cmd)
         if 1 == self.dtr_debug:
             Domoticz.Log("onCommand end")
@@ -179,8 +140,7 @@ class BasePlugin:
         Domoticz.Log("onDisconnect called")
 
     def onHeartbeat(self):
-        if 1 == self.dtr_debug:
-            Domoticz.Log("onHeartbeat called")
+        Domoticz.Log("onHeartbeat called")
         if (self.last_times > 5):
             Domoticz.Error(self.BeaconConn.Name+" has not responded to 5 pings, terminating connection.")
             self.device_alive = False
@@ -191,19 +151,11 @@ class BasePlugin:
 
     def SyncDevices(self):
         on_off = ("Off", "On")
-        offset = 1
         for i in range(1, self.channel_count):
             str_val = on_off[0]
             if( 1 == self.relay[i] ):
                 str_val = on_off[1]
-            UpdateDevice(offset, self.relay[i], str_val, not self.device_alive)
-            offset = offset + 1
-        for i in range(1, self.channel_count):
-            str_val = on_off[0]
-            if( 1 == self.rinput[i] ):
-                str_val = on_off[1]
-            UpdateDevice(offset, self.rinput[i], str_val, not self.device_alive)
-            offset = offset + 1
+            UpdateDevice(i, self.relay[i], str_val, not self.device_alive)
 
 # user funciton start
 def UpdateDevice(Unit, nValue, sValue, TimedOut):
