@@ -41,6 +41,6 @@ git pull
 - Dingtian Relay 8 Channel DT-RELAY8
 
 ## About firmware version and plugins version
-- [plugins V1.2.0](https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin/tree/v1.2.0) for relay board firmware version >= 2.17.XX
+- [plugins V1.2.1](https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin/tree/v1.2.1) for relay board firmware version >= 2.17.XX
 - [plugins V1.1.0](https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin/tree/v1.1.x) for relay board firmware version <= v2.16.XX
 
