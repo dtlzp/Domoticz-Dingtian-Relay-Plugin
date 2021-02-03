@@ -3,7 +3,7 @@
 # Author: lzp@dingtian-tech.com
 #
 """
-<plugin key="DingtianRelay" name="Dingtian Relay" author="dingtian-tech" version="1.2.0" wikilink="https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin" externallink="https://www.dingtian-tech/en_us/product.html?tab=relay">
+<plugin key="DingtianRelay" name="Dingtian Relay" author="dingtian-tech" version="1.2.1" wikilink="https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin" externallink="https://www.dingtian-tech/en_us/product.html?tab=relay">
     <description>
         Dingtian-tech Relay Domoticz Plugin.<br />
         Parity Mutux:<br />
@@ -146,6 +146,8 @@ class BasePlugin:
 
         size = struct.calcsize("<4BH2B")
         relay_index = int(Unit)
+        if relay_index >= self.channel_count:
+            return
         relay_index = relay_index - 1
         if 1 == self.dtr_debug:
             Domoticz.Log("action=" + action + ",params=" + params + ",pack_size=" + str(size) + ",relay_index=" + str(relay_index))
