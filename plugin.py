@@ -183,7 +183,7 @@ class BasePlugin:
     def onHeartbeat(self):
         if 1 == self.dtr_debug:
             Domoticz.Log("onHeartbeat called")
-        if (self.last_times > 5):
+        if (self.last_times > 35):
             Domoticz.Error(self.BeaconConn.Name+" has not responded to 5 pings, terminating connection.")
             self.device_alive = False
             self.last_times = 0
