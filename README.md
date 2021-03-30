@@ -36,11 +36,14 @@ git pull
 2. Restart Domoticz
 
 ## Supported Dingtian devices
-- Dingtian Relay 2 Channel DT-RELAY2
-- Dingtian Relay 4 Channel DT-RELAY4
-- Dingtian Relay 8 Channel DT-RELAY8
-
+- Dingtian Relay  2 Channel DT-R002
+- Dingtian Relay  4 Channel DT-R004
+- Dingtian Relay  8 Channel DT-R008
+- Dingtian Relay 16 Channel DT-R016(WIP)
+- Dingtian Relay 32 Channel DT-R032(WIP)
+- 
 ## About firmware version and plugins version
+- [plugins V1.3.x](https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin/tree/v1.3.x) for relay board firmware version >= 2.17.XX and <= v2.16.XX
 - [plugins V1.2.1](https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin/tree/v1.2.1) for relay board firmware version >= 2.17.XX
 - [plugins V1.1.0](https://github.com/dtlzp/Domoticz-Dingtian-Relay-Plugin/tree/v1.1.x) for relay board firmware version <= v2.16.XX
 
