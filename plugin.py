@@ -219,6 +219,7 @@ class BasePlugin:
         size = struct.calcsize(pack_format)
         relay_index = int(Unit)
         if relay_index >= self.channel_count:
+            self.print_log(1, "INPUT" + str(relay_index-self.channel_count+1) + " can't be Control")
             return
         relay_index = relay_index - 1
         self.print_log(1, "action=" + action + ",params=" + params + ",pack_size=" + str(size) + ",relay_index=" + str(relay_index))
