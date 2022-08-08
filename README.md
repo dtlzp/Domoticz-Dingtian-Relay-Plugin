@@ -1,5 +1,5 @@
 # Domoticz Dingtian Relay Plugin
-Domoticz Python plugin for [Dingtian Relay](https://www.dingtian-tech.com/us_en/product.html?type=relay)
+Domoticz Python plugin for [Dingtian Relay](https://www.dingtian-tech.com/en_us/product.html?tab=relay)
 ,support Ethernet and WiFi interface
 ## Function
 - Relay ON/OFF
